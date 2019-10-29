@@ -30,6 +30,7 @@ function createWindow(){
         if (response.status == 502) {
     
             console.log("asyn func long poll 3");
+            console.log("asyn func long poll 3");
           // Status 502 is a connection timeout error,
           // may happen when the connection was pending for too long,
           // and the remote server or a proxy closed it
