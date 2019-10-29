@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ÜTS - Ücret Toplama Sistemleri</title>
+</head>
+<body>
+
+    <h1 class="sayac" id="sayici"></h1>
+    <input type="text" id="inputID">
+    <button id="sendBTN"> Gönder</button>
+
+    <ul id="myUL"></ul>
+
+    
+<script>
+
+const electron= require("electron")
+const {ipcRenderer}=electron
+
+let sendBTN=document.querySelector("#sendBTN");
+let inputID=document.querySelector("#inputID");
+let sayici=document.querySelector("#sayici");
+
+let liste=document.querySelector("#myUL");
+
+sendBTN.addEventListener("click",()=>{
+
+
+ipcRenderer.send('inputKey', inputID.value)
+
+})
+
+// tek sayıcı geliyor
+ipcRenderer.on('outputKey', (e,resppp)=>{
+
+    sayici.innerHTML=resppp;
+
+})
+//liste elemanı geliyor
+ipcRenderer.on('outputKey2', (e,resppp)=>{
+   
+    // Create the list item:
+    var item = document.createElement('li');
+    item.innerHTML=resppp;
+    // Add it to the list:
+    liste.appendChild(item);
+
+})
+
+
+
+</script>
+
+</body>
+</html>
