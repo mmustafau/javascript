@@ -26,7 +26,20 @@ let sayici=document.querySelector("#sayici");
 
 let liste=document.querySelector("#myUL");
 
-sendBTN.addEventListener("click",()=>{
+console.log(vehicleObj);
+
+sendBTN.addEventListener("click",() => {
+
+    ipcRenderer.send('inputKey', "vehicleObj");
+console.log("butona basıldı");
+    let vehicleText={
+	"id":v_id.innerHTML,
+    "v_title": v_title.innerHTML,
+    "v_category": v_category.innerHTML
+};
+
+let vehicleObj=JSON.parse(vehicleText);
+
 
 
 ipcRenderer.send('inputKey', inputID.value)
