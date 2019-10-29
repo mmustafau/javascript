@@ -95,29 +95,16 @@ function createWindow(){
     
 
 
-    ipcMain.on('inputKey', (err, data) => {
-       
-        if(data){
 
+           
 
-           apiReq.callApi(function(response){
-
-            console.log(response);
-            resppp=response;
-            
-
-
-        });
-
-            win.webContents.send('outputKey',resppp);
-
-        }
+   
 
         console.log(resppp);
 
  
         
-    })
+    
 
 
 
@@ -137,7 +124,31 @@ function createWindow(){
 /*
     win.webContents.send('h1:getter',resppp);
     */
-    win.loadFile('index.html')
+    win.loadFile('index.html');
+
+
+    ipcMain.on('inputKey', (err, data) => {
+       
+        console.log(data);
+
+        if(data){
+
+            console.log("data var");
+            fetch("http://localhost:8080/VehicleAdding", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err))
+
+     }
+        
+        });
+
+
 }
 
 
