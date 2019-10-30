@@ -1,85 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ÜTS - Ücret Toplama Sistemleri</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ucretli Geçiş Sistemi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+    body {
+        color: #404E67;
+        background: #F5F7FA;
+		font-family: 'Open Sans', sans-serif;
+	}
+	.table-wrapper {
+		width: 700px;
+		margin: 30px auto;
+        background: #fff;
+        padding: 20px;	
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+    }
+    .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+    }
+    .table-title .add-new {
+        float: right;
+		height: 30px;
+		font-weight: bold;
+		font-size: 12px;
+		text-shadow: none;
+		min-width: 100px;
+		border-radius: 50px;
+		line-height: 13px;
+    }
+	.table-title .add-new i {
+		margin-right: 4px;
+	}
+    table.table {
+        table-layout: fixed;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table th:last-child {
+        width: 100px;
+    }
+    table.table td a {
+		cursor: pointer;
+        display: inline-block;
+        margin: 0 5px;
+		min-width: 24px;
+    }    
+	table.table td a.add {
+        color: #27C46B;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #E34724;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+	table.table td a.add i {
+        font-size: 24px;
+    	margin-right: -1px;
+        position: relative;
+        top: 3px;
+    }    
+    table.table .form-control {
+        height: 32px;
+        line-height: 32px;
+        box-shadow: none;
+        border-radius: 2px;
+    }
+	table.table .form-control.error {
+		border-color: #f50000;
+	}
+	
+</style>
+
 </head>
 <body>
+    <div class="container">
+        <div class="table-wrapper">
 
-    <h1 class="sayac" id="sayici"></h1>
-    <input type="text" id="v_id">
-    <input type="text" id="v_title">
-    <input type="text" id="v_category">
-    <button id="sendBTN">Gönder</button>
-
-    <ul id="myUL"></ul>
-
-    
-<script>
-
-const electron= require("electron");
-const {ipcRenderer}=electron;
-
-let sendBTN=document.querySelector("#sendBTN");
-let inputID=document.querySelector("#inputID");
-let sayici=document.querySelector("#sayici");
-
-let v_id=document.querySelector("#v_id");
-let v_title=document.querySelector("#v_title");
-let v_category=document.querySelector("#v_category");
-
-let liste=document.querySelector("#myUL");
-
-//console.log(vehicleObj);
-
-
-
-sendBTN.addEventListener("click", () => {
-
-    ipcRenderer.send("inputKey", v_title.value);
-
-    /*
-var vehicleText = '{"id":'+v_id.value+',"v_title":'+v_title.value+', "v_category":'+v_category.value+'}'
-var vehicleObj=JSON.parse(vehicleText);
-
-/*
-var $items=$('#v_id, #v_title, #v_category')
-var obj ={}
-$items.each(function() {
-    obj[this.id] = $(this).val();
-})
-var json= JSON.stringify(obj);
-*/
-//let vehicleText ='{"id":123,"v_title": v_title.innerHTML, "v_category": v_category.innerHTML}'
-
-//let vehicleObj=JSON.parse(vehicleText);
-//ipcRenderer.send("inputKey", vehicleObj);
-   
-
-})
-
-// tek sayıcı geliyor
-ipcRenderer.on('outputKey', (e,resppp)=>{
-
-    sayici.innerHTML=resppp;
-
-})
-//liste elemanı geliyor
-ipcRenderer.on('outputKey2', (e,resppp)=>{
-   
-    // Create the list item:
-    var item = document.createElement('li');
-    item.innerHTML=resppp;
-    // Add it to the list:
-    liste.appendChild(item);
-
-})
+                <table class="table table-bordered">
+               
+                        
+                         <thead>
+                             <tr>
+                                 <th>ID</th>
+                                 <th>Title</th>
+                                 <th>Category</th>
+                                 <th>Actions</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                <td><input type="text" class="form-control" name="ID" id="v_id"></td>
+                                <td><input type="text" class="form-control" name="Title" id="v_title"></td>
+                                <td><input type="text" class="form-control" name="Category" id="v_category"></td>
+                                 <td>
+                                   
+                                    <a class="add" title="Add" data-toggle="tooltip" id="sendBTN"><i class="material-icons">&#xE03B;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                     
+                                 </td>
+                             </tr>
+                             
+                         </tbody>
+                     </table>
+            <div class="table-title">
+                    
+                <div class="row">
+                    
+                    <div class="col-sm-8"><h2><b>Geçen Araç Listesi</b></h2></div>
+                   
+                    <div class="col-sm-4">
+                            <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Araç Ekle</button>
+                          
+                        </div>
+                </div>
+                
+            </div>
+           </div>
+    </div>     
 
 
+    <script>
 
-</script>
+            const electron= require("electron");
+            const {ipcRenderer}=electron;
+            
+            let sendBTN=document.querySelector("#sendBTN");
 
+            //yeni araç eklenen yer
+            sendBTN.addEventListener("click", () => {
+
+            let v_id=document.querySelector("#v_id");
+            let v_title=document.querySelector("#v_title");
+            let v_category=document.querySelector("#v_category");
+            
+            //inputlardan JSON objesi oluşturulan yer
+            var vehicleText = {id:v_id.value, v_title:v_title.value, v_category:v_category.value};
+            var obj=JSON.stringify(vehicleText);
+            var JObj=JSON.parse(obj)
+        
+
+            ipcRenderer.send("inputKey",JObj);
+            
+            
+            })
+          
+            </script>
 </body>
 </html>

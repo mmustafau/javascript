@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ÜTS - Ücret Toplama Sistemleri</title>
+</head>
+<body>
+
+    <h1 class="sayac" id="sayici"></h1>
+    <input type="text" id="v_id">
+    <input type="text" id="v_title">
+    <input type="text" id="v_category">
+    <button id="sendBTN">Gönder</button>
+
+    <ul id="myUL"></ul>
+
+    
+<script>
+
+const electron= require("electron");
+const {ipcRenderer}=electron;
+
+let sendBTN=document.querySelector("#sendBTN");
+//let inputID=document.querySelector("#inputID");
+let sayici=document.querySelector("#sayici");
+
+let v_id=document.querySelector("#v_id");
+let v_title=document.querySelector("#v_title");
+let v_category=document.querySelector("#v_category");
+
+
+let liste=document.querySelector("#myUL");
+
+//console.log(vehicleObj);
+
+
+
+sendBTN.addEventListener("click", () => {
+
+    ipcRenderer.send("inputKey", "v_title.value");
+
+    /*
+var vehicleText = '{"id":'+v_id.value+',"v_title":'+v_title.value+', "v_category":'+v_category.value+'}'
+var vehicleObj=JSON.parse(vehicleText);
+
+/*
+var $items=$('#v_id, #v_title, #v_category')
+var obj ={}
+$items.each(function() {
+    obj[this.id] = $(this).val();
+})
+var json= JSON.stringify(obj);
+*/
+//let vehicleText ='{"id":123,"v_title": v_title.innerHTML, "v_category": v_category.innerHTML}'
+
+//let vehicleObj=JSON.parse(vehicleText);
+//ipcRenderer.send("inputKey", vehicleObj);
+   
+
+})
+
+// tek sayıcı geliyor
+ipcRenderer.on('outputKey', (e,resppp)=>{
+
+    sayici.innerHTML=resppp;
+
+})
+//liste elemanı geliyor
+ipcRenderer.on('outputKey2', (e,resppp)=>{
+   
+    // Create the list item:
+    var item = document.createElement('li');
+    item.innerHTML=resppp;
+    // Add it to the list:
+    liste.appendChild(item);
+
+})
+
+
+
+</script>
+
+</body>
+</html>

@@ -25,7 +25,7 @@ function createWindow(){
 
     async function subscribe() {
       
-        let response = await fetch("http://localhost:8080/all");
+        let response = await fetch("http://localhost:9090/all");
         
         if (response.status == 502) {
     
@@ -40,8 +40,8 @@ function createWindow(){
     
             console.log("asyn func long poll 4");
           // An error - let's show it
-          console.log("asyn func long poll");
-          showMessage(response.statusText);
+          console.log("response status 200 değil");
+         
           // Reconnect in one second
           await new Promise(resolve => setTimeout(resolve, 1000));
           await subscribe();
@@ -134,7 +134,7 @@ function createWindow(){
         if(data){
 
             console.log("data var");
-            fetch("http://localhost:8080/VehicleAdding", {
+            fetch("http://localhost:9090/VehicleAdding", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ function createWindow(){
 
      }
         
-        });
+        })
 
 
 }
@@ -154,18 +154,20 @@ function createWindow(){
 
 
 
-app2.get('/', function (req,res)
+app2.post('/VehicleAdding', (req,res)=>
 
 {
 
-    res.send('Hello World');
+  return res.send('post mesajı alındı');
 
 });
 
 console.log("while öncesi");
 
 
-
+app2.listen(3000, () =>
+  console.log(`Example app listening on port ${process.env.PORT}!`),
+);
 
 apiReq.callApi(function(response){
             resppp=response;
@@ -189,8 +191,7 @@ apiReq.callApi(function(response){
 
 
 
-
-
+/*
 http.createServer((req,res)=> {
 
     if(req.url==="/request"){
@@ -215,7 +216,7 @@ http.createServer((req,res)=> {
 }
 
 }).listen(3000)
-
+*/
 
 
 
