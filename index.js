@@ -162,12 +162,13 @@ app2.post('/VehicleAdding', (req,res)=>
 
 });
 
-console.log("while öncesi");
+
 
 
 app2.listen(3000, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`),
 );
+
 
 apiReq.callApi(function(response){
             resppp=response;
