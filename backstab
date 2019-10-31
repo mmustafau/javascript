@@ -1,4 +1,21 @@
  
+
+
+
+
+
+ <tr>
+                        
+                       <td><input type="text" class="form-control" name="ID" id="v_id"></td>
+                       <td><input type="text" class="form-control" name="Title" id="v_title"></td>
+                       <td><input type="text" class="form-control" name="Category" id="v_category"></td>
+                       
+                    </tr>
+
+
+
+
+
  /// alttaki tablolar
 
  <table class="table table-bordered">

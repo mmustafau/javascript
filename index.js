@@ -42,33 +42,7 @@ app2.get('/testo', (req, res) => {
     })
   });
 
-app2.post('/VehicleAdding', (req, res) => {
-
-  console.log(req.body);
-  if(!req.body.v_title || 1==0 ) {
-    return res.status(400).send({
-      success: 'false',
-      message: 'title is required'
-    });
-  } else if(1==0 ) {
-    return res.status(400).send({
-      success: 'false',
-      message: 'description is required'
-    });
-  }
- const newVehicle = {
-   id: req.body.id,
-   v_title: req.body.v_title,
-   v_category: req.body.v_category
- }
- console.log(newVehicle);
- dequeList.push(newVehicle);
- return res.status(201).send({
-   success: 'true',
-   message: 'todo added successfully',
-   newVehicle
- })
-});
+//app2. post metodunun yeri
 
 
 
@@ -135,35 +109,9 @@ function createWindow(){
 
       subscribe();
     
-    
-    
-    
+      const {ipcMain} =require('electron')
 
-
-    console.log("create window");
-
-    const {ipcMain} =require('electron')
-
-    console.log("elect requ");
-
-    
-
-
-
-           
-
-   
-
-        console.log(resppp);
-
- 
-        
-    
-
-
-
-    console.log("sync");
-
+      
     let win =new BrowserWindow({
 
         width:800,
@@ -174,16 +122,16 @@ function createWindow(){
         }
 
     })
- 
-/*
-    win.webContents.send('h1:getter',resppp);
-    */
+
+    
     win.loadFile('index.html');
 
 
-    ipcMain.on('inputKey', (err, data) => {
+    ipcMain.on('uiToLcNewvehicle', (err, data) => {
        
         console.log(data);
+        dequeList.unshift(data);
+        win.webContents.send('dequeList',dequeList);
 
         if(data){
 
@@ -201,6 +149,72 @@ function createWindow(){
      }
         
         })
+
+        // lc den gelen vehicle nesnelerinin bir deque ye eklenmesi
+
+        app2.post('/VehicleAdding', (req, res) => {
+
+          console.log(req.body);
+          if(!req.body.v_title || 1==0 ) {
+            return res.status(400).send({
+              success: 'false',
+              message: 'title is required'
+            });
+          } else if(1==0 ) {
+            return res.status(400).send({
+              success: 'false',
+              message: 'description is required'
+            });
+          }
+         const newVehicle = {
+           id: req.body.id,
+           v_title: req.body.v_title,
+           v_category: req.body.v_category
+         }
+        
+         dequeList.push(newVehicle);
+         console.log(dequeList);
+         win.webContents.send('dequeList',dequeList);
+        
+        
+         return res.status(201).send({
+           success: 'true',
+           message: 'todo added successfully',
+           newVehicle
+         })
+        });
+
+
+        //araç geçiş onayıyla en öndeki araç listeden çıkar
+
+        app2.post('/VehicleRemoving', (req, res) => {
+
+          console.log(req.body);
+          if(!req.body.v_title || 1==0 ) {
+            return res.status(400).send({
+              success: 'false',
+              message: 'title is required'
+            });
+          } else if(1==0 ) {
+            return res.status(400).send({
+              success: 'false',
+              message: 'description is required'
+            });
+          }
+       
+         dequeList.shift();
+         
+         console.log(dequeList);
+         win.webContents.send('dequeList',dequeList);
+        
+        
+         return res.status(201).send({
+           success: 'true',
+           message: 'todo added successfully',
+           
+         })
+        });
+
 
 
 }
