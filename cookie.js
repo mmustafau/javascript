@@ -1,4 +1,5 @@
 //generate edilen cookie kodudur. front end de kullanılmaz. sadece geliştirme için burada tutuluyor. Bu dosya encode edilip backende aktarılıyor. by mustafa.unlu
+console.log("CDN works")
 var link = document.createElement("link");
 link.href = "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.4.7/dist/cookieconsent.css";
 link.type = "text/css";
